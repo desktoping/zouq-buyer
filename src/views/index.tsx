@@ -1,9 +1,10 @@
 import React from 'react';
 import { HeaderComponent } from '../common/components';
+import MainPage from './main';
 
 export default () => (
   <>
     <HeaderComponent />
-    <div>Hello world</div>
+    <MainPage />
   </>
 );

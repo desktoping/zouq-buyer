@@ -1,3 +1,5 @@
 import HeaderComponent from './header';
+import BasicCardComponent from './basicCard';
+import PremiumCardComponent from './premiumCard';
 
-export { HeaderComponent };
+export { HeaderComponent, BasicCardComponent, PremiumCardComponent };
