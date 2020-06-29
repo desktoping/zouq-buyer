@@ -60,7 +60,7 @@ const LivePanelComponent = () => {
   return (
     <div className={classes.container}>
       <Typography gutterBottom variant="h5" className={classes.title}>
-        Live right now
+        Category 1
       </Typography>
 
       <Grid container spacing={3}>
