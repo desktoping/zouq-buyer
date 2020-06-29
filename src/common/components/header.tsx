@@ -25,6 +25,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import logo from '../../assets/logo-dark.svg';
 import { doLogin, doLogout } from '../../store/actions';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -279,9 +280,11 @@ const HeaderComponent = ({
           >
             <MenuIcon />
           </IconButton>
-          <Icon className={classes.logo}>
-            <img alt="zouq logo" src={logo} className={classes.logo} />
-          </Icon>
+          <Link to="/">
+            <Icon className={classes.logo}>
+              <img alt="zouq logo" src={logo} className={classes.logo} />
+            </Icon>
+          </Link>
           <div className={classes.search}>
             <TextField
               placeholder="Search…"

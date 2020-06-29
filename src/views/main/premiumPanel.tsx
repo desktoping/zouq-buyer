@@ -73,8 +73,8 @@ const LivePanelComponent = () => {
 
       <Grid container spacing={3}>
         {liveStreamData.map((data: any, i: number) => (
-          <Grid item xs={12} md={6}>
-            <PremiumCardComponent key={i} {...data} />
+          <Grid item xs={12} md={6} key={i}>
+            <PremiumCardComponent {...data} />
           </Grid>
         ))}
       </Grid>

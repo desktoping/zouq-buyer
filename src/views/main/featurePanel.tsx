@@ -65,8 +65,8 @@ const FeaturePanelComponent = () => {
 
       <Grid container spacing={3}>
         {liveStreamData.map((data: any, i: number) => (
-          <Grid item xs={12} md={3}>
-            <BasicCardComponent key={i} {...data} />
+          <Grid item xs={12} md={3} key={i}>
+            <BasicCardComponent {...data} />
           </Grid>
         ))}
       </Grid>

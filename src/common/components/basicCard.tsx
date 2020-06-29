@@ -1,4 +1,12 @@
-import { Avatar, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
+import {
+  Avatar,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Visibility } from '@material-ui/icons';
 import React from 'react';
@@ -85,7 +93,7 @@ const BasicCardComponent = ({
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={4} md={3}>
-              <Grid alignItems="center">
+              <Grid container alignItems="center">
                 <Avatar
                   alt="Zouq"
                   src="https://f1.pngfuel.com/png/386/684/972/face-icon-user-icon-design-user-profile-share-icon-avatar-black-and-white-silhouette-png-clip-art.png"

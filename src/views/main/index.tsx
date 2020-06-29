@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import FeaturePanel from './featurePanel';
 import LivePanel from './livePanel';
 import PremiumPanel from './premiumPanel';
+import CategoryPanel from './categoryPanel';
 
 const useStyles = makeStyles({
   root: {},
@@ -20,6 +21,7 @@ const MainPageComponent = () => {
       <FeaturePanel />
       <LivePanel />
       <PremiumPanel />
+      <CategoryPanel />
     </div>
   );
 };
