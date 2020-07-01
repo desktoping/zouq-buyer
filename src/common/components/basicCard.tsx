@@ -25,7 +25,6 @@ const useStyles = makeStyles({
     height: '20%',
     width: '100%',
     left: 0,
-    zIndex: 2,
   },
   viewsContainer: {
     width: 70,
