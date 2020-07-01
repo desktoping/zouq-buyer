@@ -23,9 +23,11 @@ import {
 import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
-import logo from '../../assets/logo-dark.svg';
-import { doLogin, doLogout } from '../../store/actions';
 import { Link } from 'react-router-dom';
+import logo from '../../../assets/logo-dark.svg';
+import { doLogin, doLogout } from '../../../store/actions';
+import CartMenuItemComponent from './cartMenu';
+import ProfileMenuItemComponent from './profileMenu';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -123,6 +125,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sectionDesktop: {
     display: 'none',
+    height: 40,
     [theme.breakpoints.up('md')]: {
       display: 'flex',
     },
@@ -173,11 +176,14 @@ const HeaderComponent = ({
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
+      elevation={20}
+      style={{ top: 20 }}
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       id={menuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      getContentAnchorEl={null}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -198,10 +204,11 @@ const HeaderComponent = ({
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+      getContentAnchorEl={null}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -313,15 +320,7 @@ const HeaderComponent = ({
           <div className={classes.sectionDesktop}>
             {loggedIn ? (
               <>
-                <IconButton
-                  className={classes.appIcons}
-                  aria-label="show 4 new mails"
-                  color="inherit"
-                >
-                  <Badge badgeContent={4} color="secondary">
-                    <CartIcon />
-                  </Badge>
-                </IconButton>
+                <CartMenuItemComponent menuClassName={classes.appIcons} />
                 <IconButton
                   className={classes.appIcons}
                   aria-label="show 4 new mails"
@@ -340,17 +339,7 @@ const HeaderComponent = ({
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>
-                <IconButton
-                  className={classes.appIcons}
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
+                <ProfileMenuItemComponent menuClassName={classes.appIcons} />
               </>
             ) : (
               <>
