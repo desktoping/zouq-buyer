@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    width: '100%',
     boxShadow: 'none',
   },
   actionArea: {},
@@ -51,7 +51,7 @@ interface IProps {
   live?: boolean;
 
   // views of the stream, fetched by the main component and saved to store
-  views: number;
+  views: string;
 
   // thumbnail of the stream
   thumbnail: string;
@@ -61,6 +61,9 @@ interface IProps {
 
   // stream title
   title: string;
+
+  // handle click
+  clickHandler?: () => void;
 }
 
 const BasicCardComponent = ({
@@ -69,16 +72,17 @@ const BasicCardComponent = ({
   thumbnail,
   title,
   seller,
+  clickHandler,
 }: IProps) => {
   const classes = useStyles({ live });
 
   return (
     <Card className={classes.root}>
-      <CardActionArea className={classes.actionArea}>
+      <CardActionArea className={classes.actionArea} onClick={clickHandler}>
         <CardMedia
           component="img"
-          height="250"
           src={thumbnail}
+          height="250"
           title="Contemplative Reptile"
         />
         <div className={classes.liveIndicator}>

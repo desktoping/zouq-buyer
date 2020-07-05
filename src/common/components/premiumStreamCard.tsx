@@ -13,10 +13,9 @@ import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    width: '100%',
     boxShadow: 'none',
   },
-  actionArea: {},
   liveIndicator: {
     position: 'absolute',
     padding: 10,
@@ -71,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 20,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
+    marginTop: 10,
     [theme.breakpoints.down('md')]: {
       paddingLeft: 0,
     },
@@ -98,23 +98,27 @@ interface IProps {
 
   // message of stream
   message: string;
+
+  // handle click
+  clickHandler?: () => void;
 }
 
-const BasicCardComponent = ({
+const PremiumCardComponent = ({
   live,
   views,
   thumbnail,
   title,
   seller,
   message,
+  clickHandler,
 }: IProps) => {
   const classes = useStyles({ live });
 
   return (
-    <Grid container>
+    <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
-        <Card className={classes.root}>
-          <CardActionArea className={classes.actionArea}>
+        <Card className={classes.root} onClick={clickHandler}>
+          <CardActionArea>
             <CardMedia
               component="img"
               height="300"
@@ -183,7 +187,9 @@ const BasicCardComponent = ({
         </Grid>
 
         <Grid item xs={12} className={classes.message}>
-          {message}
+          <Typography component="div" variant="body1">
+            {message}
+          </Typography>
         </Grid>
 
         <Grid item xs={12} className={`${classes.stats} ${classes.flex}`}>
@@ -207,4 +213,4 @@ const BasicCardComponent = ({
   );
 };
 
-export default connect()(BasicCardComponent);
+export default connect()(PremiumCardComponent);
