@@ -2,14 +2,19 @@ import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PremiumCardComponent } from '../../common';
+import { generatePremiumStreamData } from '../../common/data/stream';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   },
   container: {
     width: '80%',
+    [theme.breakpoints.down('md')]: {
+      width: '95%',
+    },
     margin: 'auto',
     marginTop: 20,
   },
@@ -17,53 +22,11 @@ const useStyles = makeStyles({
     paddingTop: 15,
     paddingBottom: 15,
   },
-});
+}));
 
 interface IProps {}
 
-/**
- * @dev - Sample data that is fetched from streams
- */
-const liveStreamData = [
-  {
-    live: false,
-    views: '100',
-    thumbnail: 'https://picsum.photos/200/300',
-    message:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed purus leo. Pellentesque eget ipsum luctus, faucibus felis at, interdum sem. Integer luctus, libero sed cursus vulputate, velit ligula imperdiet turpis, in viverra tellus massa vel enim. Nunc feugiat leo et lacus fringilla, ut ullamcorper nisl porta. Curabitur elit purus, feugiat id sapien eu, tincidunt pulvinar magna.',
-    title: 'Stream title 2',
-    seller: 'Streamer 2',
-  },
-  {
-    live: true,
-    views: '200K',
-    thumbnail: 'https://picsum.photos/200/300',
-    message:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed purus leo. Pellentesque eget ipsum luctus, faucibus felis at, interdum sem. Integer luctus, libero sed cursus vulputate, velit ligula imperdiet turpis, in viverra tellus massa vel enim. Nunc feugiat leo et lacus fringilla, ut ullamcorper nisl porta. Curabitur elit purus, feugiat id sapien eu, tincidunt pulvinar magna.',
-    title: 'Stream title 2',
-    seller: 'Streamer 2',
-  },
-  {
-    live: false,
-    views: '120',
-    thumbnail: 'https://picsum.photos/200/300',
-    message:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed purus leo. Pellentesque eget ipsum luctus, faucibus felis at, interdum sem. Integer luctus, libero sed cursus vulputate, velit ligula imperdiet turpis, in viverra tellus massa vel enim. Nunc feugiat leo et lacus fringilla, ut ullamcorper nisl porta. Curabitur elit purus, feugiat id sapien eu, tincidunt pulvinar magna.',
-    title: 'Stream title 2',
-    seller: 'Streamer 2',
-  },
-  {
-    live: false,
-    views: '24K',
-    thumbnail: 'https://picsum.photos/200/300',
-    message:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed purus leo. Pellentesque eget ipsum luctus, faucibus felis at, interdum sem. Integer luctus, libero sed cursus vulputate, velit ligula imperdiet turpis, in viverra tellus massa vel enim. Nunc feugiat leo et lacus fringilla, ut ullamcorper nisl porta. Curabitur elit purus, feugiat id sapien eu, tincidunt pulvinar magna.',
-    title: 'Stream title 2',
-    seller: 'Streamer 2',
-  },
-];
-
-const LivePanelComponent = () => {
+const LivePanelComponent = ({ history }: RouteComponentProps) => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -72,9 +35,12 @@ const LivePanelComponent = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        {liveStreamData.map((data: any, i: number) => (
+        {generatePremiumStreamData(4).map((data: any, i: number) => (
           <Grid item xs={12} md={6} key={i}>
-            <PremiumCardComponent {...data} />
+            <PremiumCardComponent
+              {...data}
+              clickHandler={() => history.push(`/live/${data.id}`)}
+            />
           </Grid>
         ))}
       </Grid>
@@ -82,4 +48,4 @@ const LivePanelComponent = () => {
   );
 };
 
-export default connect()(LivePanelComponent);
+export default connect()(withRouter(LivePanelComponent));

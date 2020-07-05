@@ -2,14 +2,19 @@ import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { BasicCardComponent } from '../../common';
+import { generateStreamData } from '../../common/data/stream';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   },
   container: {
     width: '80%',
+    [theme.breakpoints.down('md')]: {
+      width: '95%',
+    },
     margin: 'auto',
     marginTop: 20,
   },
@@ -17,45 +22,11 @@ const useStyles = makeStyles({
     paddingTop: 15,
     paddingBottom: 15,
   },
-});
+}));
 
 interface IProps {}
 
-/**
- * @dev - Sample data that is fetched from streams
- */
-const liveStreamData = [
-  {
-    live: true,
-    views: '100',
-    thumbnail: 'https://picsum.photos/200/300',
-    title: 'Stream title',
-    seller: 'Streamer',
-  },
-  {
-    live: true,
-    views: '200K',
-    thumbnail: 'https://picsum.photos/200/300',
-    title: 'Stream title',
-    seller: 'Streamer',
-  },
-  {
-    live: true,
-    views: '120',
-    thumbnail: 'https://picsum.photos/200/300',
-    title: 'Stream title',
-    seller: 'Streamer',
-  },
-  {
-    live: true,
-    views: '24K',
-    thumbnail: 'https://picsum.photos/200/300',
-    title: 'Stream title',
-    seller: 'Streamer',
-  },
-];
-
-const LivePanelComponent = () => {
+const LivePanelComponent = ({ history }: RouteComponentProps) => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -64,9 +35,12 @@ const LivePanelComponent = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        {liveStreamData.map((data: any, i: number) => (
+        {generateStreamData(4).map((data: any, i: number) => (
           <Grid item xs={12} md={3} key={i}>
-            <BasicCardComponent {...data} />
+            <BasicCardComponent
+              {...data}
+              clickHandler={() => history.push(`/live/${data.id}`)}
+            />
           </Grid>
         ))}
       </Grid>
@@ -74,4 +48,4 @@ const LivePanelComponent = () => {
   );
 };
 
-export default connect()(LivePanelComponent);
+export default connect()(withRouter(LivePanelComponent));

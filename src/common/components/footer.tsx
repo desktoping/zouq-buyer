@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid, makeStyles, Typography, Hidden } from '@material-ui/core';
 import {
   YouTube as YTIcon,
   Facebook as FBIcon,
@@ -45,20 +45,45 @@ const FooterComponent = () => {
         <InsIcon fontSize="large" className={classes.socialIcon} />
         <YTIcon fontSize="large" className={classes.socialIcon} />
       </Grid>
-      <Grid item xs={12} className={classes.line}>
-        <Typography component="p">
-          &#169; {new Date().getFullYear()} Zouq. All Rights Reserved.
-        </Typography>
-        <Link to="/terms" className={classes.links}>
-          <Typography component="p">Terms &amp; Conditions</Typography>
-        </Link>
-        <Link to="/privacy" className={classes.links}>
-          <Typography component="p">Privacy Policy</Typography>
-        </Link>
-        <Link to="/cookie" className={classes.links}>
-          <Typography component="p">Cookie Policy</Typography>
-        </Link>
-      </Grid>
+      <Hidden smDown>
+        <Grid item xs={12} className={classes.line}>
+          <Typography component="p">
+            &#169; {new Date().getFullYear()} Zouq. All Rights Reserved.
+          </Typography>
+          <Link to="/terms" className={classes.links}>
+            <Typography component="p">Terms &amp; Conditions</Typography>
+          </Link>
+          <Link to="/privacy" className={classes.links}>
+            <Typography component="p">Privacy Policy</Typography>
+          </Link>
+          <Link to="/cookie" className={classes.links}>
+            <Typography component="p">Cookie Policy</Typography>
+          </Link>
+        </Grid>
+      </Hidden>
+      <Hidden mdUp>
+        <Grid item xs={12} className={classes.line}>
+          <Typography component="p">
+            &#169; {new Date().getFullYear()} Zouq. All Rights Reserved.
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          alignItems="center"
+          style={{ display: 'flex', flexDirection: 'column' }}
+        >
+          <Link to="/terms" className={classes.links}>
+            <Typography component="p">Terms &amp; Conditions</Typography>
+          </Link>
+          <Link to="/privacy" className={classes.links}>
+            <Typography component="p">Privacy Policy</Typography>
+          </Link>
+          <Link to="/cookie" className={classes.links}>
+            <Typography component="p">Cookie Policy</Typography>
+          </Link>
+        </Grid>
+      </Hidden>
     </Grid>
   );
 };

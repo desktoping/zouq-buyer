@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
     height: 40,
     marginLeft: 20,
     border: '1px solid #99D1FF',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      margin: 0,
+    },
   },
   logo: {
     height: '100%',
@@ -264,7 +268,7 @@ const HeaderComponent = ({
             <Button
               onClick={dispatchLogin}
               variant="outlined"
-              className={classes.appIcons}
+              className={classes.loginButton}
             >
               Login
             </Button>
