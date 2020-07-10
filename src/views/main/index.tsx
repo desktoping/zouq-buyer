@@ -1,10 +1,11 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
+import { LoginModalComponent } from '../../common';
+import CategoryPanel from './categoryPanel';
 import FeaturePanel from './featurePanel';
 import LivePanel from './livePanel';
 import PremiumPanel from './premiumPanel';
-import CategoryPanel from './categoryPanel';
 
 const useStyles = makeStyles({
   root: {},
@@ -18,6 +19,7 @@ const MainPageComponent = () => {
 
   return (
     <div className={classes.root}>
+      <LoginModalComponent />
       <FeaturePanel />
       <LivePanel />
       <PremiumPanel />

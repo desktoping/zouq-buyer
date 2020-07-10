@@ -4,6 +4,7 @@ const initialState: ILoginReduxState = {
   username: '',
   loggedIn: false,
   accessToken: '',
+  show: false,
 };
 
 const actionHandlers = {
@@ -11,6 +12,16 @@ const actionHandlers = {
     ...state,
     loggedIn: true,
     accessToken: '',
+  }),
+
+  OPEN_LOGIN: (state: ILoginReduxState) => ({
+    ...state,
+    show: true,
+  }),
+
+  CLOSE_LOGIN: (state: ILoginReduxState) => ({
+    ...state,
+    show: false,
   }),
 
   LOGOUT: (state: ILoginReduxState, payload: number) => ({
