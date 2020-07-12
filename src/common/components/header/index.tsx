@@ -25,7 +25,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo-dark.svg';
-import { doLogin, doLogout } from '../../../store/actions';
+import { doLogin, doLogout, openLogin } from '../../../store/actions';
 import CartMenuItemComponent from './cartMenu';
 import ProfileMenuItemComponent from './profileMenu';
 
@@ -146,12 +146,14 @@ interface IProps {
   loggedIn: boolean;
   dispatchLogin: () => void;
   dispatchLogout: () => void;
+  dispatchOpenLogin: () => void;
 }
 
 const HeaderComponent = ({
   loggedIn,
   dispatchLogin,
   dispatchLogout,
+  dispatchOpenLogin,
 }: IProps) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -266,7 +268,7 @@ const HeaderComponent = ({
           </MenuItem>
           <MenuItem>
             <Button
-              onClick={dispatchLogin}
+              onClick={dispatchOpenLogin}
               variant="outlined"
               className={classes.loginButton}
             >
@@ -357,7 +359,7 @@ const HeaderComponent = ({
                   </Badge>
                 </IconButton>
                 <Button
-                  onClick={dispatchLogin}
+                  onClick={dispatchOpenLogin}
                   variant="outlined"
                   className={classes.loginButton}
                 >
@@ -391,6 +393,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
+  dispatchOpenLogin: () => dispatch({ type: openLogin }),
   dispatchLogin: () => dispatch({ type: doLogin }),
   dispatchLogout: () => dispatch({ type: doLogout }),
 });
