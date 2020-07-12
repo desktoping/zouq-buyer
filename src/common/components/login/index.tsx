@@ -4,9 +4,11 @@ import {
   makeStyles,
   Modal,
   Theme,
+  CircularProgress,
 } from '@material-ui/core';
 import { get } from 'lodash';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import RICIBs from 'react-individual-character-input-boxes';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { connect } from 'react-redux';
@@ -56,6 +58,12 @@ const useStyles = makeStyles((theme: Theme) =>
     error: {
       color: '#E07171',
     },
+    inputVerification: {
+      '& div': {
+        marginTop: 0,
+        width: '100%',
+      },
+    },
   })
 );
 
@@ -86,45 +94,99 @@ const LoginModalComponent = ({
   const [modalStyle] = useState(getModalStyle);
   const [phone, setPhone] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [verificationCode, setVerificationCode] = useState<string>('');
+  const [isVerificationMode, setIsVerficationMode] = useState<boolean>(false);
+  const [isVerifyingCodeToApi, setIsVerifyingCodeToApi] = useState<boolean>(
+    false
+  );
 
   const handleClickLogin = () => {
-    if (phone.length <= 0) {
-      setError('Enter your number to continue');
-    } else {
-      setError('');
-      dispatchCloseLogin();
-      dispatchDoLogin({ username: phone });
-      setPhone('');
-    }
+    setError(phone.length <= 0 ? 'Enter your number to continue' : '');
+    setIsVerficationMode(phone.length > 0);
   };
+
+  useEffect(() => {
+    return () => setIsVerficationMode(false);
+  }, []);
+
+  useEffect(() => {
+    // Do verification call
+    setIsVerifyingCodeToApi(verificationCode.length === 4);
+
+    if (verificationCode.length === 4) {
+      setTimeout(() => {
+        setIsVerifyingCodeToApi(false);
+        setIsVerficationMode(false);
+        dispatchCloseLogin();
+        dispatchDoLogin({ username: phone });
+        setPhone('');
+      }, 3000);
+    }
+  }, [verificationCode]);
+
+  console.log(verificationCode);
 
   return (
     <Modal open={show} onClose={dispatchCloseLogin}>
       <div style={modalStyle} className={classes.paper}>
-        <img src={logo} className={classes.logo} />
-        <h2 className={classes.header}>Login</h2>
-        <p className={classes.text}>
-          Enter your mobile number to login to your account
-        </p>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <PhoneInput
-            value={phone}
-            onChange={setPhone}
-            onlyCountries={['ph']}
-            country="ph"
-            countryCodeEditable={false}
-          />
-        </div>
-        {error && <p className={classes.error}>{error}</p>}
-        <Button className={classes.loginBtn} onClick={handleClickLogin}>
-          Login
-        </Button>
-        <div className={classes.text}>
-          Don&quot;t have an account?{' '}
-          <Link className={classes.link} to="/register">
-            Create Account Now
-          </Link>
-        </div>
+        <img alt="Zouq Logo" src={logo} className={classes.logo} />
+        {isVerifyingCodeToApi ? (
+          <CircularProgress />
+        ) : !isVerificationMode ? (
+          <>
+            <h2 className={classes.header}>Login</h2>
+            <p className={classes.text}>
+              Enter your mobile number to login to your account
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <PhoneInput
+                value={phone}
+                onChange={setPhone}
+                onlyCountries={['ph']}
+                country="ph"
+                countryCodeEditable={false}
+              />
+            </div>
+            {error && <p className={classes.error}>{error}</p>}
+            <Button className={classes.loginBtn} onClick={handleClickLogin}>
+              Login
+            </Button>
+            <div className={classes.text}>
+              Don&quot;t have an account?{' '}
+              <Link className={classes.link} to="/register">
+                Create Account Now
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 className={classes.header}>Verification</h2>
+            <p className={classes.text}>
+              We sent 4-digit verification code to your number ending{' '}
+              {phone.substr(phone.length - 4)}
+            </p>
+            <div className={classes.inputVerification}>
+              <RICIBs
+                amount={4}
+                autoFocus
+                handleOutputString={setVerificationCode}
+                inputRegExp={/^[0-9]$/}
+              />
+            </div>
+            <div className={classes.text}>
+              Need new code?{' '}
+              <Link
+                className={classes.link}
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+                to="#"
+              >
+                Resend now
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </Modal>
   );

@@ -3,6 +3,7 @@ import FooterComponent from './footer';
 import HeaderComponent from './header';
 import LoginModalComponent from './login';
 import NotFoundComponent from './notFound';
+import PaypalButtonComponent from './paypalButton';
 import PremiumProductComponent from './premiumProductCard';
 import PremiumCardComponent from './premiumStreamCard';
 
@@ -14,4 +15,5 @@ export {
   LoginModalComponent,
   FooterComponent,
   NotFoundComponent,
+  PaypalButtonComponent,
 };

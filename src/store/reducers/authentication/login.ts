@@ -2,7 +2,7 @@ import { ILoginReduxState } from '../../../common';
 
 const initialState: ILoginReduxState = {
   username: '',
-  loggedIn: false,
+  loggedIn: true,
   accessToken: '',
   show: false,
 };

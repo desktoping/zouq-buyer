@@ -1,16 +1,17 @@
 import {
   Badge,
+  Button,
+  Divider,
   Grid,
   IconButton,
   makeStyles,
   Typography,
-  Divider,
-  Button,
 } from '@material-ui/core';
 import { AddShoppingCart as CartIcon } from '@material-ui/icons';
 import React, { useState } from 'react';
 import Popover from 'react-popover';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { formatPhp } from '../../utils';
 
 const useStyle = makeStyles({
@@ -57,7 +58,10 @@ interface IProps {
   menuClassName: string;
 }
 
-const CartMenuItemComponent = ({ menuClassName }: IProps) => {
+const CartMenuItemComponent = ({
+  menuClassName,
+  history,
+}: RouteComponentProps & IProps) => {
   const classes = useStyle();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -152,6 +156,10 @@ const CartMenuItemComponent = ({ menuClassName }: IProps) => {
               size="small"
               variant="outlined"
               style={{ border: '1px solid #99D1FF' }}
+              onClick={() => {
+                history.push('/checkout');
+                setOpen(false);
+              }}
             >
               Checkout
             </Button>
@@ -175,6 +183,4 @@ const CartMenuItemComponent = ({ menuClassName }: IProps) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => ({});
-
-export default connect(null, mapDispatchToProps)(CartMenuItemComponent);
+export default withRouter(CartMenuItemComponent);

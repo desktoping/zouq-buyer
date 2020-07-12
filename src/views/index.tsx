@@ -1,15 +1,7 @@
 import React, { useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useLocation,
-} from 'react-router-dom';
-import {
-  FooterComponent,
-  HeaderComponent,
-  NotFoundComponent,
-} from '../common/components';
+import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
+import { FooterComponent, HeaderComponent, NotFoundComponent } from '../common/components';
+import CheckoutPage from './checkout';
 import LivePage from './live';
 import MainPage from './main';
 
@@ -34,6 +26,9 @@ export default () => (
         </Route>
         <Route exact path="/live/:id">
           <LivePage />
+        </Route>
+        <Route exact path="/checkout">
+          <CheckoutPage />
         </Route>
         <Route path="*" exact={true} component={NotFoundComponent} />
       </Switch>
