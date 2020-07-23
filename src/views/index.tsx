@@ -6,7 +6,14 @@ import {
   Switch,
   useLocation,
 } from 'react-router-dom';
-import { Footer, Header } from '../common/components';
+import {
+  Footer,
+  Header,
+  VerificationModal,
+  ReadyModal,
+} from '../common/components';
+import KYCForm from './Kyc';
+import CapturePhoto from './Kyc/CapturePhoto';
 import Landing from './Landing';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,9 +46,13 @@ export default () => {
         <Switch>
           <Switch>
             <Route exact path="/" component={Landing} />
+            <Route exact path="/kyc" component={KYCForm} />
+            <Route exact path="/kyc/capture" component={CapturePhoto} />
           </Switch>
         </Switch>
         <Footer />
+        <VerificationModal />
+        <ReadyModal />
       </Router>
     </div>
   );
