@@ -3,7 +3,9 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import { connect } from 'react-redux';
 import { GradientBlueButton } from '../../common/components';
+import { openVerificationModal } from '../../store/actions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,7 +72,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default () => {
+interface IProps {
+  handleOpenVerification: () => void;
+}
+
+const Banner = ({ handleOpenVerification }: IProps) => {
   const classes = useStyles();
   const [phone, setPhone] = useState<string>('');
 
@@ -80,17 +86,21 @@ export default () => {
         Sell safe. Shop safe.
       </Typography>
       <div className={classes.inputContainer}>
-        <PhoneInput
-          // // containerClass={}
-          // inputClass={classes.phoneInput}
-          country={'ph'}
-          value={phone}
-          onChange={setPhone}
-        />
-        <GradientBlueButton className={classes.createAccountBtn}>
+        <PhoneInput country={'ph'} value={phone} onChange={setPhone} />
+        <GradientBlueButton
+          className={classes.createAccountBtn}
+          // @TODO: Send request to API
+          onClick={handleOpenVerification}
+        >
           Create Account
         </GradientBlueButton>
       </div>
     </div>
   );
 };
+
+const mapDispatchToProps = (dispatch: any) => ({
+  handleOpenVerification: () => dispatch({ type: openVerificationModal }),
+});
+
+export default connect(null, mapDispatchToProps)(Banner);

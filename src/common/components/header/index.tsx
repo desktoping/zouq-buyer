@@ -1,6 +1,7 @@
 import { AppBar, Button, Hidden, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ReactComponent as LogoDark } from '../../../assets/logo-dark.svg';
 import { COLOR_BLUE, COLOR_GRAY } from '../../typography';
 
@@ -48,13 +49,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default () => {
+const Header = ({ history }: RouteComponentProps) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar position="static" color="transparent">
-        <LogoDark className={classes.logo} />
+        <LogoDark className={classes.logo} onClick={() => history.push('/')} />
         <Hidden smDown>
           <Typography variant="h6" className={classes.title}>
             Our Mission
@@ -72,3 +73,5 @@ export default () => {
     </div>
   );
 };
+
+export default withRouter(Header);
